@@ -1,0 +1,201 @@
+/*
+========================================================
+File: delete_at_position.cpp
+Concept: Linked List - Delete Node at Any Position
+Language: C++
+Author: Piyush
+========================================================
+*/
+
+#include<iostream>
+using namespace std;
+
+// Node class represents a single element of Linked List
+class Node {
+    int data;       // stores value of node
+    Node * next;    // pointer to next node
+
+public:
+    // Constructor
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+
+    // Allow Linkedlist class to access private members
+    friend class Linkedlist;
+};
+
+// Linked List class
+class Linkedlist {
+
+    Node * head;   // pointer to first node
+    Node * tail;   // pointer to last node
+
+public:
+
+    // Constructor
+    Linkedlist() {
+        head = nullptr;
+        tail = nullptr;
+    }
+    /*
+    ========================================================
+    Function: push_front
+    Purpose : Insert node at beginning
+    Time Complexity : O(1)
+    ========================================================
+    */
+
+    void push_front(int val) {
+
+        Node * newnode = new Node(val);
+
+        // edge case: empty list
+        if(head == NULL) {
+            head = tail = newnode;
+        }
+
+        else {
+            newnode->next = head;
+            head = newnode;
+        }
+    }
+
+    /*
+    ========================================================
+    Function: delete_at_pos
+    Purpose : Delete node from given position
+    Time Complexity : O(n)
+    ========================================================
+    */
+
+    void delete_at_pos(int pos) {
+        // Edge Case 1:
+        // Linked List is empty
+        if(head == NULL) {
+            cout << "Linked List is empty" << endl;
+            return;
+        }
+
+        // Edge Case 2:
+        // Invalid Position
+        if(pos <= 0) {
+            cout << "Invalid Position" << endl;
+            return;
+        }
+
+    // Edge Case 3:
+        // Delete first node
+        if(pos == 1) {
+            Node * temp = head;
+            head = head->next;
+
+            // if only one node existed
+            if(head == NULL) {
+                tail = NULL;
+            }
+
+            delete temp;
+            return;
+        }
+
+        // temp will stop at (pos-1)th node
+        Node * temp = head;
+
+        for(int i = 1; i < pos - 1; i++) {
+
+            // position out of range
+            if(temp == NULL || temp->next == NULL) {
+                cout << "Position out of range" << endl;
+                return;
+            }
+
+            temp = temp->next;
+        }
+
+        // node to delete
+        Node * nextnode = temp->next;
+
+        // Edge Case 4:
+        // Position greater than length
+        if(nextnode == NULL) {
+            cout << "Position out of range" << endl;
+            return;
+        }
+
+        // connect previous node to next node
+        temp->next = nextnode->next;
+
+
+        // Edge Case 5:
+        // deleting last node
+        if(nextnode == tail) {
+            tail = temp;
+        }
+        delete nextnode;
+    }
+
+    /*
+    ========================================================
+    Function: print
+    Purpose : Print Linked List
+    Time Complexity : O(n)
+    ========================================================
+    */
+
+    void print() {
+
+        Node * temp = head;
+
+        while(temp != NULL) {
+            cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+
+        cout << "NULL" << endl;
+    }
+
+};
+
+
+int main() {
+
+    Linkedlist ll;
+
+    // inserting nodes
+    ll.push_front(5);
+    ll.push_front(4);
+    ll.push_front(3);
+    ll.push_front(2);
+    ll.push_front(1);
+
+
+    cout << "Original Linked List:" << endl;
+    ll.print();
+
+
+    // delete middle node
+    ll.delete_at_pos(3);
+
+    cout << endl;
+    cout << "After deleting node at position 3:" << endl;
+    ll.print();
+
+    // delete first node
+    ll.delete_at_pos(1);
+
+    cout << endl;
+    cout << "After deleting first node:" << endl;
+    ll.print();
+
+    // delete last node
+    ll.delete_at_pos(3);
+
+    cout << endl;
+    cout << "After deleting last node:" << endl;
+    ll.print();
+
+
+    return 0;
+}
