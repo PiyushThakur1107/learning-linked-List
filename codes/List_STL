@@ -1,0 +1,94 @@
+/*
+========================================================
+File: stl_list.cpp
+Concept: STL List (Doubly Linked List)
+Language: C++
+Author: Piyush
+========================================================
+*/
+
+#include<iostream>
+#include<list>
+using namespace std;
+
+/*
+ * Function: printList
+ * Purpose: Display elements of STL List
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+void printList(list<int> ll){
+
+    list<int>::iterator itr;
+
+    for(itr = ll.begin(); itr != ll.end(); itr++){
+        cout<<(*itr)<<" -> ";
+    }
+
+    cout<<"NULL"<<endl;
+}
+
+int main(){
+
+    // Create an empty STL List
+    list<int> ll;
+
+    /*
+     * push_front()
+     * Inserts element at beginning
+     * Time Complexity: O(1)
+     */
+    ll.push_front(2);
+    ll.push_front(1);
+
+    /*
+     * push_back()
+     * Inserts element at end
+     * Time Complexity: O(1)
+     */
+    ll.push_back(3);
+    ll.push_back(4);
+
+    cout<<"List after insertion:\n";
+    printList(ll);
+
+    cout<<"Head: "<<ll.front()<<"\n";
+    cout<<"Tail: "<<ll.back()<<endl;
+
+    /*
+     * pop_front()
+     * Removes first element
+     * Time Complexity: O(1)
+     *
+     * pop_back()
+     * Removes last element
+     * Time Complexity: O(1)
+     */
+    ll.pop_front();
+    ll.pop_back();
+
+    cout<<"\nList after deletion:\n";
+    printList(ll);
+
+    cout<<"Head: "<<ll.front()<<"\n";
+    cout<<"Tail: "<<ll.back()<<endl;
+
+    /*
+     * insert()
+     * Inserts element before a given iterator
+     * Time Complexity: O(n)
+     */
+
+    auto it = ll.begin();
+
+    // Move iterator to index 1
+    advance(it, 1);
+
+    // Insert 10 before iterator position
+    ll.insert(it, 10);
+
+    cout<<"\nList after inserting 10 at index 1:\n";
+    printList(ll);
+
+    return 0;
+}
