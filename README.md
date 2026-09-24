@@ -73,4 +73,4 @@ and technical interviews.
 
 ## Author
 
-**Piyush**
+**Piyush Thakur**
